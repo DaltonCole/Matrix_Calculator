@@ -13,6 +13,8 @@
 		291537361AD8699C00FACAAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 291537351AD8699C00FACAAA /* Images.xcassets */; };
 		291537391AD8699C00FACAAA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 291537371AD8699C00FACAAA /* LaunchScreen.xib */; };
 		291537451AD8699C00FACAAA /* Matrix_CalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291537441AD8699C00FACAAA /* Matrix_CalculatorTests.swift */; };
+		29ADC98D1AEED3C800508FE9 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ADC98C1AEED3C800508FE9 /* Matrix.swift */; };
+		29ADC9941AF0245F00508FE9 /* UIViewControllerEM1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ADC9931AF0245F00508FE9 /* UIViewControllerEM1.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		2915373E1AD8699C00FACAAA /* Matrix_CalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Matrix_CalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		291537431AD8699C00FACAAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		291537441AD8699C00FACAAA /* Matrix_CalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix_CalculatorTests.swift; sourceTree = "<group>"; };
+		29ADC98C1AEED3C800508FE9 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		29ADC9931AF0245F00508FE9 /* UIViewControllerEM1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerEM1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +84,11 @@
 				2915372E1AD8699C00FACAAA /* AppDelegate.swift */,
 				291537301AD8699C00FACAAA /* ViewController.swift */,
 				291537321AD8699C00FACAAA /* Main.storyboard */,
+				29ADC9931AF0245F00508FE9 /* UIViewControllerEM1.swift */,
 				291537351AD8699C00FACAAA /* Images.xcassets */,
 				291537371AD8699C00FACAAA /* LaunchScreen.xib */,
 				2915372C1AD8699C00FACAAA /* Supporting Files */,
+				29ADC98C1AEED3C800508FE9 /* Matrix.swift */,
 			);
 			path = Matrix_Calculator;
 			sourceTree = "<group>";
@@ -212,8 +218,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29ADC9941AF0245F00508FE9 /* UIViewControllerEM1.swift in Sources */,
 				291537311AD8699C00FACAAA /* ViewController.swift in Sources */,
 				2915372F1AD8699C00FACAAA /* AppDelegate.swift in Sources */,
+				29ADC98D1AEED3C800508FE9 /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +413,7 @@
 				2915374A1AD8699C00FACAAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2915374B1AD8699C00FACAAA /* Build configuration list for PBXNativeTarget "Matrix_CalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +422,7 @@
 				2915374D1AD8699C00FACAAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
