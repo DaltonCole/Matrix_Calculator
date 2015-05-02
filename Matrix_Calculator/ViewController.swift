@@ -13,6 +13,8 @@ var mat: Matrix = Matrix()
 var matricies = ["A", "B", "C", "D", "E", "F", "G", "H"]
 var pick: String = "A"
 var menu: String = "enter"
+var displayed_matrix: String = "B"
+var pickORfield: Bool = false //false if pick, true if text field
 
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate{
@@ -67,6 +69,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var Display65: UITextField!
     @IBOutlet weak var Display66: UITextField!
     
+    @IBOutlet weak var mat1: UITextField!
+    @IBOutlet weak var mat2: UITextField!
+    @IBOutlet weak var matEqual: UITextField!
+    @IBOutlet weak var detEqual: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,47 +105,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         var matrix_selected = matricies[row]
         pick = matricies[row]
+        pickORfield = false
     }
-    
-    //Menu picker
-    @IBAction func menu_enter(sender: AnyObject)
-    {
-        menu = "enter"
-    }
-    @IBAction func menu_add(sender: AnyObject)
-    {
-        menu = "add"
-    }
-    @IBAction func menu_sub(sender: AnyObject)
-    {
-        menu = "sub"
-    }
-    @IBAction func menu_transpose(sender: AnyObject)
-    {
-        menu = "transpose"
-    }
-    @IBAction func menu_det(sender: AnyObject)
-    {
-        menu = "det"
-    }
-    @IBAction func menu_inverse(sender: AnyObject)
-    {
-        menu = "inverse"
-    }
-    @IBAction func menu_display(sender: AnyObject)
-    {
-        menu = "display"
-    }
-    
-    
-
-
-    
     
     //Done button on Enter Matrix Pressed
     @IBAction func DoneButtonPressed(sender: AnyObject)
     {
-        var m: [[Float]] = mat.DISPLAY(pick)
+        var m: [[Float]]
+        if(pickORfield == false)
+        {
+            m = mat.DISPLAY(pick)
+        }
+        else
+        {
+            m = mat.DISPLAY(displayed_matrix)
+        }
         m[0][0] = (Display00.text as NSString).floatValue
         m[0][1] = (Display01.text as NSString).floatValue
         m[0][2] = (Display02.text as NSString).floatValue
@@ -195,7 +175,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func NextButtonPressed(sender: AnyObject)
     {
-        var m: [[Float]] = mat.DISPLAY(pick)
+        var m: [[Float]]
+        if(pickORfield == false)
+        {
+            m = mat.DISPLAY(pick)
+        }
+        else
+        {
+            m = mat.DISPLAY(displayed_matrix)
+        }
         Display00.text = String(format: "%.2f", m[0][0])
         Display01.text = String(format: "%.2f", m[0][1])
         Display02.text = String(format: "%.2f", m[0][2])
@@ -248,6 +236,145 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
 
+    func set_display(display:String)
+    {
+        if(display == "A")
+        {
+            displayed_matrix = "A"
+        }
+        else if(display == "B")
+        {
+            displayed_matrix = "B"
+        }
+        else if(display == "C")
+        {
+            displayed_matrix = "C"
+        }
+        else if(display == "D")
+        {
+            displayed_matrix = "D"
+        }
+        else if(display == "E")
+        {
+            displayed_matrix = "E"
+        }
+        else if(display == "F")
+        {
+            displayed_matrix = "F"
+        }
+        else if(display == "G")
+        {
+            displayed_matrix = "G"
+        }
+        else if(display == "H")
+        {
+            displayed_matrix = "H"
+        }
+        pickORfield = true
+        println("display: \(display)")
+        println("Displayed_matrix: \(displayed_matrix)")
+    }
+
+    @IBAction func button_add(sender: AnyObject)
+    {
+        if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
+        {
+            var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+            var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
+            var matrix_equal: [[Float]] = mat.ADD(matrix_one, matrix_two: matrix_two)
+            mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+            set_display(matEqual.text)
+        }
+    }
+    
+    @IBAction func button_sub(sender: AnyObject)
+    {
+        var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+        var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
+        var matrix_equal: [[Float]] = mat.SUB(matrix_one, matrix_two: matrix_two)
+        mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+        set_display(matEqual.text)
+    }
+    
+    @IBAction func button_tran(sender: AnyObject)
+    {
+        pickORfield = true
+        var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+        var matrix_equal: [[Float]] = mat.TRANSPOSE(matrix_one)
+        mat.SAVE(matEqual.text, matrix_one : matrix_equal)
+    }
+    
+    @IBAction func button_det(sender: AnyObject)
+    {
+        pickORfield = true
+        var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+        var det: Float = mat.DETERMINANT(matrix_one)
+        detEqual.text = String(format: "%.2f", det)
+    }
+    
+    @IBAction func button_inverse(sender: AnyObject)
+    {
+        pickORfield = true
+        var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+        var matrix_equal: [[Float]] = mat.INVERSE(matrix_one)
+        mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+    }
+    
+    
+    @IBAction func NextButtonPressed_field(sender: AnyObject)
+    {
+        var m: [[Float]] = mat.DISPLAY(displayed_matrix)
+        Display00.text = String(format: "%.2f", m[0][0])
+        Display01.text = String(format: "%.2f", m[0][1])
+        Display02.text = String(format: "%.2f", m[0][2])
+        Display03.text = String(format: "%.2f", m[0][3])
+        Display04.text = String(format: "%.2f", m[0][4])
+        Display05.text = String(format: "%.2f", m[0][5])
+        Display06.text = String(format: "%.2f", m[0][6])
+        Display10.text = String(format: "%.2f", m[1][0])
+        Display11.text = String(format: "%.2f", m[1][1])
+        Display12.text = String(format: "%.2f", m[1][2])
+        Display13.text = String(format: "%.2f", m[1][3])
+        Display14.text = String(format: "%.2f", m[1][4])
+        Display15.text = String(format: "%.2f", m[1][5])
+        Display16.text = String(format: "%.2f", m[1][6])
+        Display20.text = String(format: "%.2f", m[2][0])
+        Display21.text = String(format: "%.2f", m[2][1])
+        Display22.text = String(format: "%.2f", m[2][2])
+        Display23.text = String(format: "%.2f", m[2][3])
+        Display24.text = String(format: "%.2f", m[2][4])
+        Display25.text = String(format: "%.2f", m[2][5])
+        Display26.text = String(format: "%.2f", m[2][6])
+        Display30.text = String(format: "%.2f", m[3][0])
+        Display31.text = String(format: "%.2f", m[3][1])
+        Display32.text = String(format: "%.2f", m[3][2])
+        Display33.text = String(format: "%.2f", m[3][3])
+        Display34.text = String(format: "%.2f", m[3][4])
+        Display35.text = String(format: "%.2f", m[3][5])
+        Display36.text = String(format: "%.2f", m[3][6])
+        Display40.text = String(format: "%.2f", m[4][0])
+        Display41.text = String(format: "%.2f", m[4][1])
+        Display42.text = String(format: "%.2f", m[4][2])
+        Display43.text = String(format: "%.2f", m[4][3])
+        Display44.text = String(format: "%.2f", m[4][4])
+        Display45.text = String(format: "%.2f", m[4][5])
+        Display46.text = String(format: "%.2f", m[4][6])
+        Display50.text = String(format: "%.2f", m[5][0])
+        Display51.text = String(format: "%.2f", m[5][1])
+        Display52.text = String(format: "%.2f", m[5][2])
+        Display53.text = String(format: "%.2f", m[5][3])
+        Display54.text = String(format: "%.2f", m[5][4])
+        Display55.text = String(format: "%.2f", m[5][5])
+        Display56.text = String(format: "%.2f", m[5][6])
+        Display60.text = String(format: "%.2f", m[6][0])
+        Display61.text = String(format: "%.2f", m[6][1])
+        Display62.text = String(format: "%.2f", m[6][2])
+        Display63.text = String(format: "%.2f", m[6][3])
+        Display64.text = String(format: "%.2f", m[6][4])
+        Display65.text = String(format: "%.2f", m[6][5])
+        Display66.text = String(format: "%.2f", m[6][6])
+        
+    }
     
     @IBOutlet weak var Done1: UIButton!
 }
