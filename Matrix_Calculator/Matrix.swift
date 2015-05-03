@@ -326,25 +326,194 @@ class Matrix
             {
                 for var k = 0; k < max_size; k++
                 {
-                    result[i][j] = result[i][j] + (matrix_one[j][k]*matrix_two[k][j])
+                    result[i][j] = result[i][j] + (matrix_one[i][k]*matrix_two[k][j])
                 }
             }
         }
         return result
     }
     //Take the inverse of a matrix
-    func INVERSE(matrix_one: [[Float]]) -> [[Float]]
+    func INVERSE(matrix_one: [[Float]], order: Int) -> [[Float]]
     {
-        var result: [[Float]] = [[Float]]()
+        var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         
-        var invert: [[Float]] = [[Float]]()
+        var invert: [[Float]] = [[Float]](count:8, repeatedValue:[Float](count:16, repeatedValue:0))
         
-        var invertable = 0//mat.DETERMINANT(matrix_one)
+        var invertable: Float = DETERMINANT(matrix_one, order: order)
         
         var coefficient: Float = 1
         
         if( invertable != 0)
         {
+            var i: Int
+            var j: Int
+            var k: Int
+            var l: Int
+            var n = order
+            var f: Float
+            var ratio: Float
+            var multi: Float
+            var a: Float
+            var divider: Float
+            
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < n; j++
+                {
+                    invert[i][j] = matrix_one[i][j]
+                }
+            }
+            
+            for i = 0; i < n; i++
+            {
+                for j = n; j < 2*n; j++
+                {
+                    if(i == (j-n))
+                    {
+                        invert[i][j] = 1
+                    }
+                    else
+                    {
+                        invert[i][j] = 0
+                    }
+                }
+            }
+            
+            //get the first half of matrix 0 except for diagonal
+            //Forward loop
+
+            
+            //Get diagonal to be all 1s (WORKS)
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < 2*n; j++
+                {
+                    if(i == j)
+                    {
+                        if(invert[i][j] != 1)
+                        {
+                            ratio = invert[i][j]
+                            for var t = i; t < n; t++
+                            {
+                                for var v = 0; v < 2*n; v++
+                                {
+                                    invert[t][v] = invert[t][v] / ratio
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            //The above code makes the diagonal all 1s, use this to forward eliminate, then backwards subsitute 
+            
+            /*
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < 2*n; j++
+                {
+                    println("\(invert[i][j])")
+                }
+            }
+            println("-----------------")
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < n; j++
+                {
+                    if(i != j)
+                    {
+                        ratio = invert[j][i] / invert[i][j]
+                        for k = 0; k < 2*n; k++
+                        {
+                            invert[j][k] -= ratio * invert[i][k]
+                        }
+                    }
+                }
+            }
+            for i = 0; i < n; i++
+            {
+                a = invert[i][i]
+                for j = 0; j < 2*n; j++
+                {
+                    invert[i][j] /= a
+                }
+            }
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < 2*n; j++
+                {
+                    println("\(invert[i][j])")
+                }
+            } */
+            /*
+            //make an augmented matrix with the left hand side being the Identity matrix and right being the original matrix
+            for i = 1; i <= n; i++
+            {
+                for j = 1; j <= n*2; j++
+                {
+                    if( j == (i + n)) //might be n-1
+                    {
+                        invert[i][j] = 1
+                    }
+                }
+            }
+            for i = n; i > 1; i--
+            {
+                if(invert[i][1] < invert[i][1])
+                {
+                    for j = 1; j <= n*2; j++
+                    {
+                        //println("\(invert[i][j])")
+                        f = invert[i][j]
+                        invert[i][j] = invert[i-1][j]
+                        invert[i-1][j] = f
+                        //println("\(invert[i][j])")
+                    }
+                }
+            }
+            
+            //Get identity onto the right hand side
+            for i = 1; i <= n; i++
+            {
+                for j = 1; j <= n*2; j++
+                {
+                    if(j != i)
+                    {
+                        f = invert[j][i] / invert[i][j]
+                        for k = 1; k <= n*2; k++
+                        {
+                            invert[j][k] = invert[j][k] - (invert[i][k] * f)
+                        }
+                    }
+                    println("\(invert[i][j])")
+                }
+            }
+            for i = 1; i <= n; i++
+            {
+                f = invert[i][i]
+                for j = 0; j <= n*2; j++
+                {
+                    invert[i][j] = invert[i][j] / f
+                    //println("\(invert[i][j])")
+                }
+            }
+            
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < n; j++
+                {
+                    invert[i][j] = invert[i+1][j+1]
+                }
+            }
+            //Set the first half of inverse equal to result matrix
+            for i = 0; i < n; i++
+            {
+                for j = 0; j < n; j++
+                {
+                    result[i][j] = invert[i+1][(j)+n]
+                }
+            }*/
+            /*
             for var i = 0; i < max_size; i++
             {
                 for var j = 0; j < max_size*2; j++
@@ -399,14 +568,18 @@ class Matrix
                         //FINISH__-----------------------------------------------
                     }
                 }
-            }
+            }*/
         }
         else
         {
             //error
         }
-        return result
+        return invert
+        //return result
+        //var test: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
+        //return test
     }
+    
     //Takes the determinite of a matrix
     func DETERMINANT(matrix_one: [[Float]], order: Int) -> Float
     {

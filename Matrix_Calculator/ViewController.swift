@@ -83,6 +83,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var colSize: UITextField!
     
     
+    
     //label to tell user that the matricies are uncapatable
     @IBOutlet weak var uncapatable_matrix: UILabel!
     
@@ -130,6 +131,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         else
         {
+            println("\(displayed_matrix)")
             m = mat.DISPLAY(displayed_matrix)
         }
         m[0][0] = (Display00.text as NSString).floatValue
@@ -181,8 +183,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         m[6][4] = (Display64.text as NSString).floatValue
         m[6][5] = (Display65.text as NSString).floatValue
         m[6][6] = (Display66.text as NSString).floatValue
-        mat.SAVE(pick, matrix_one: m)
-    
+        if(pickORfield == false)
+        {
+            mat.SAVE(pick, matrix_one: m)
+        }
+        else
+        {
+            mat.SAVE(displayed_matrix, matrix_one: m)
+        }
     }
     
     @IBAction func NextButtonPressed(sender: AnyObject)
@@ -204,200 +212,302 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 rowsize = mat.rowCount(displayed_matrix)
                 colsize = mat.colCount(displayed_matrix)
             }
+            
+            //Make text fields invisible to start with
+            Display00.hidden = true
+            Display01.hidden = true
+            Display02.hidden = true
+            Display03.hidden = true
+            Display04.hidden = true
+            Display05.hidden = true
+            Display06.hidden = true
+            Display10.hidden = true
+            Display11.hidden = true
+            Display12.hidden = true
+            Display13.hidden = true
+            Display14.hidden = true
+            Display15.hidden = true
+            Display16.hidden = true
+            Display20.hidden = true
+            Display21.hidden = true
+            Display22.hidden = true
+            Display23.hidden = true
+            Display24.hidden = true
+            Display25.hidden = true
+            Display26.hidden = true
+            Display30.hidden = true
+            Display31.hidden = true
+            Display32.hidden = true
+            Display33.hidden = true
+            Display34.hidden = true
+            Display35.hidden = true
+            Display36.hidden = true
+            Display40.hidden = true
+            Display41.hidden = true
+            Display42.hidden = true
+            Display43.hidden = true
+            Display44.hidden = true
+            Display45.hidden = true
+            Display46.hidden = true
+            Display50.hidden = true
+            Display51.hidden = true
+            Display52.hidden = true
+            Display53.hidden = true
+            Display54.hidden = true
+            Display55.hidden = true
+            Display56.hidden = true
+            Display60.hidden = true
+            Display61.hidden = true
+            Display62.hidden = true
+            Display63.hidden = true
+            Display64.hidden = true
+            Display65.hidden = true
+            Display66.hidden = true
+            
+            
             if((0 < rowsize) && (0 < colsize))
             {
+                Display00.hidden = false
                 Display00.text = String(format: "%.2f", m[0][0])
             }
             if((0 < rowsize) && (1 < colsize))
             {
+                Display01.hidden = false
                 Display01.text = String(format: "%.2f", m[0][1])
             }
             if((0 < rowsize) && (2 < colsize))
             {
+                Display02.hidden = false
                 Display02.text = String(format: "%.2f", m[0][2])
             }
             if((0 < rowsize) && (3 < colsize))
             {
+                Display03.hidden = false
                 Display03.text = String(format: "%.2f", m[0][3])
             }
             if((0 < rowsize) && (4 < colsize))
             {
+                Display04.hidden = false
                 Display04.text = String(format: "%.2f", m[0][4])
             }
             if((0 < rowsize) && (5 < colsize))
             {
+                Display05.hidden = false
                 Display05.text = String(format: "%.2f", m[0][5])
             }
             if((0 < rowsize) && (6 < colsize))
             {
+                Display06.hidden = false
                 Display06.text = String(format: "%.2f", m[0][6])
             }
             if((1 < rowsize) && (0 < colsize))
             {
+                Display10.hidden = false
                 Display10.text = String(format: "%.2f", m[1][0])
             }
             if((1 < rowsize) && (1 < colsize))
             {
+                Display11.hidden = false
                 Display11.text = String(format: "%.2f", m[1][1])
             }
             if((1 < rowsize) && (2 < colsize))
             {
+                Display12.hidden = false
                 Display12.text = String(format: "%.2f", m[1][2])
             }
             if((1 < rowsize) && (3 < colsize))
             {
+                Display13.hidden = false
                 Display13.text = String(format: "%.2f", m[1][3])
             }
             if((1 < rowsize) && (4 < colsize))
             {
+                Display14.hidden = false
                 Display14.text = String(format: "%.2f", m[1][4])
             }
             if((1 < rowsize) && (5 < colsize))
             {
+                Display15.hidden = false
                 Display15.text = String(format: "%.2f", m[1][5])
             }
             if((1 < rowsize) && (6 < colsize))
             {
+                Display16.hidden = false
                 Display16.text = String(format: "%.2f", m[1][6])
             }
             if((2 < rowsize) && (0 < colsize))
             {
+                Display20.hidden = false
                 Display20.text = String(format: "%.2f", m[2][0])
             }
             if((2 < rowsize) && (1 < colsize))
             {
+                Display21.hidden = false
                 Display21.text = String(format: "%.2f", m[2][1])
             }
             if((2 < rowsize) && (2 < colsize))
             {
+                Display22.hidden = false
                 Display22.text = String(format: "%.2f", m[2][2])
             }
             if((2 < rowsize) && (3 < colsize))
             {
+                Display23.hidden = false
                 Display23.text = String(format: "%.2f", m[2][3])
             }
             if((2 < rowsize) && (4 < colsize))
             {
+                Display24.hidden = false
                 Display24.text = String(format: "%.2f", m[2][4])
             }
             if((2 < rowsize) && (5 < colsize))
             {
+                Display25.hidden = false
                 Display25.text = String(format: "%.2f", m[2][5])
             }
             if((2 < rowsize) && (6 < colsize))
             {
+                Display26.hidden = false
                 Display26.text = String(format: "%.2f", m[2][6])
             }
             if((3 < rowsize) && (0 < colsize))
             {
+                Display30.hidden = false
                 Display30.text = String(format: "%.2f", m[3][0])
             }
             if((3 < rowsize) && (1 < colsize))
             {
+                Display31.hidden = false
                 Display31.text = String(format: "%.2f", m[3][1])
             }
             if((3 < rowsize) && (2 < colsize))
             {
+                Display32.hidden = false
                 Display32.text = String(format: "%.2f", m[3][2])
             }
             if((3 < rowsize) && (3 < colsize))
             {
+                Display33.hidden = false
                 Display33.text = String(format: "%.2f", m[3][3])
             }
             if((3 < rowsize) && (4 < colsize))
             {
+                Display34.hidden = false
                 Display34.text = String(format: "%.2f", m[3][4])
             }
             if((3 < rowsize) && (5 < colsize))
             {
+                Display35.hidden = false
                 Display35.text = String(format: "%.2f", m[3][5])
             }
             if((3 < rowsize) && (6 < colsize))
             {
+                Display36.hidden = false
                 Display36.text = String(format: "%.2f", m[3][6])
             }
             if((4 < rowsize) && (0 < colsize))
             {
+                Display40.hidden = false
                 Display40.text = String(format: "%.2f", m[4][0])
             }
             if((4 < rowsize) && (1 < colsize))
             {
+                Display41.hidden = false
                 Display41.text = String(format: "%.2f", m[4][1])
             }
             if((4 < rowsize) && (2 < colsize))
             {
+                Display42.hidden = false
                 Display42.text = String(format: "%.2f", m[4][2])
             }
             if((4 < rowsize) && (3 < colsize))
             {
+                Display43.hidden = false
                 Display43.text = String(format: "%.2f", m[4][3])
             }
             if((4 < rowsize) && (4 < colsize))
             {
+                Display44.hidden = false
                 Display44.text = String(format: "%.2f", m[4][4])
             }
             if((4 < rowsize) && (5 < colsize))
             {
+                Display45.hidden = false
                 Display45.text = String(format: "%.2f", m[4][5])
             }
             if((4 < rowsize) && (6 < colsize))
             {
+                Display46.hidden = false
                 Display46.text = String(format: "%.2f", m[4][6])
             }
             if((5 < rowsize) && (0 < colsize))
             {
+                Display50.hidden = false
                 Display50.text = String(format: "%.2f", m[5][0])
             }
             if((5 < rowsize) && (1 < colsize))
             {
+                Display51.hidden = false
                 Display51.text = String(format: "%.2f", m[5][1])
             }
             if((5 < rowsize) && (2 < colsize))
             {
+                Display52.hidden = false
                 Display52.text = String(format: "%.2f", m[5][2])
             }
             if((5 < rowsize) && (3 < colsize))
             {
+                Display53.hidden = false
                 Display53.text = String(format: "%.2f", m[5][3])
             }
             if((5 < rowsize) && (4 < colsize))
             {
+                Display54.hidden = false
                 Display54.text = String(format: "%.2f", m[5][4])
             }
             if((5 < rowsize) && (5 < colsize))
             {
+                Display55.hidden = false
                 Display55.text = String(format: "%.2f", m[5][5])
             }
             if((5 < rowsize) && (6 < colsize))
             {
+                Display56.hidden = false
                 Display56.text = String(format: "%.2f", m[5][6])
             }
             if((6 < rowsize) && (0 < colsize))
             {
+                Display60.hidden = false
                 Display60.text = String(format: "%.2f", m[6][0])
             }
             if((6 < rowsize) && (1 < colsize))
             {
+                Display61.hidden = false
                 Display61.text = String(format: "%.2f", m[6][1])
             }
             if((6 < rowsize) && (2 < colsize))
             {
+                Display62.hidden = false
                 Display62.text = String(format: "%.2f", m[6][2])
             }
             if((6 < rowsize) && (3 < colsize))
             {
+                Display63.hidden = false
                 Display63.text = String(format: "%.2f", m[6][3])
             }
             if((6 < rowsize) && (4 < colsize))
             {
+                Display64.hidden = false
                 Display64.text = String(format: "%.2f", m[6][4])
             }
             if((6 < rowsize) && (5 < colsize))
             {
+                Display65.hidden = false
                 Display65.text = String(format: "%.2f", m[6][5])
             }
             if((6 < rowsize) && (6 < colsize))
             {
+                Display66.hidden = false
                 Display66.text = String(format: "%.2f", m[6][6])
             }
             uncapatable_matrix.text = "Capatable Matricies"
@@ -544,13 +654,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func button_inverse(sender: AnyObject)
     {
-        pickORfield = true
         var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
-        var matrix_equal: [[Float]] = mat.INVERSE(matrix_one)
-        mat.SAVE(matEqual.text, matrix_one: matrix_equal)
-        var matrix_one_row = mat.rowCount(mat1.text)
-        var matrix_one_col = mat.colCount(mat1.text)
-        mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
+        
+        if((mat.rowCount(mat1.text) == mat.colCount(mat1.text)) && (mat.DETERMINANT(matrix_one, order: mat.rowCount(mat1.text)) != 0))
+        {
+            pickORfield = true
+            var matrix_equal: [[Float]] = mat.INVERSE(matrix_one, order: mat.rowCount(mat1.text))
+            mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+            var matrix_one_row = mat.rowCount(mat1.text)
+            var matrix_one_col = mat.colCount(mat1.text)
+            mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
+            correctSize = true
+            set_display(matEqual.text)
+        }
+        else
+        {
+            correctSize = false
+            errorMessage = "Matrix must be a square matrix and determinant cannot equal 0"
+        }
     }
     
     @IBAction func button_multi(sender: AnyObject)
