@@ -36,6 +36,9 @@ class Matrix
     var rowH: Int
     var colH: Int
     
+    //for Determinate
+    var d: Float
+    
     
     let max_size:Int = 7
     
@@ -66,6 +69,8 @@ class Matrix
         self.colG = 0
         self.rowH = 0
         self.colH = 0
+        
+        self.d = 0
     }
     //Returns the matrix to be displayed
     func DISPLAY(matrix_number: String) -> [[Float]]
@@ -148,6 +153,50 @@ class Matrix
         else if(pick == "H")
         {
             H = matrix_one
+        }
+    }
+    
+    func setRowAndColSize(rowSize: Int, colSize: Int, matrix_num: String)
+    {
+        if(matrix_num == "A")
+        {
+            rowA = rowSize
+            colA = colSize
+        }
+        else if(matrix_num == "B")
+        {
+            rowB = rowSize
+            colB = colSize
+        }
+        else if(matrix_num == "C")
+        {
+            rowC = rowSize
+            colC = colSize
+        }
+        else if(matrix_num == "D")
+        {
+            rowD = rowSize
+            colD = colSize
+        }
+        else if(matrix_num == "E")
+        {
+            rowE = rowSize
+            colE = colSize
+        }
+        else if(matrix_num == "F")
+        {
+            rowF = rowSize
+            colF = colSize
+        }
+        else if(matrix_num == "G")
+        {
+            rowG = rowSize
+            colG = colSize
+        }
+        else
+        {
+            rowH = rowSize
+            colH = colSize
         }
     }
     
@@ -296,7 +345,7 @@ class Matrix
         
         var invert: [[Float]] = [[Float]]()
         
-        var invertable = mat.DETERMINANT(matrix_one)
+        var invertable = 0//mat.DETERMINANT(matrix_one)
         
         var coefficient: Float = 1
         
@@ -365,11 +414,49 @@ class Matrix
         return result
     }
     //Takes the determinite of a matrix
-    func DETERMINANT(matrix_one: [[Float]]) -> Float
+    func DETERMINANT(matrix_one: [[Float]], order: Int) -> Float
     {
-        var result: [[Float]] = [[Float]]()
-        return 1
-        //FINISH----------------------------------------------------------
+        self.d = 0
+        var determinant: Float = DET(order, matrix_one: matrix_one)
+        return determinant
+    }
+    func DET(order: Int, matrix_one: [[Float]]) -> Float
+    {
+        var c: Int
+        var subi: Int
+        var i: Int
+        var j: Int
+        var subj: Int
+        var power: Float = -1
+        var submat: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
+        if(order == 2)
+        {
+            return((matrix_one[0][0]*matrix_one[1][1]) - (matrix_one[1][0]*matrix_one[0][1]))
+        }
+        else
+        {
+            for( c = 0; c < order; c++)
+            {
+                subi = 0;
+                for(i=1; i < order; i++)
+                {
+                    subj = 0
+                    for(j=0; j < order; j++)
+                    {
+                        if(j == c)
+                        {
+                            continue
+                        }
+                        submat[subi][subj] = matrix_one[i][j]
+                        subj++
+                    }
+                    subi++
+                }
+                power = power * (-1)
+                d = d + (power * matrix_one[0][c] * DET(order-1, matrix_one: submat))
+            }
+        }
+        return d
     }
     //Returns the LU Factorization of a matrix
     func LU(matrix_one: [[Float]]) -> (L_matrix: [[Float]], U_matrix: [[Float]])
