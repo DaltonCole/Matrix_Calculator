@@ -553,5 +553,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
     }
     
+    @IBAction func button_multi(sender: AnyObject)
+    {
+        if((mat.rowCount(mat1.text) == mat.colCount(mat2.text)) && (mat.rowCount(mat1.text) == mat.colCount(mat2.text)))
+        {
+            var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+            var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
+            var matrix_equal: [[Float]] = mat.MULTIPLY(matrix_one, matrix_two: matrix_two)
+            mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+            set_display(matEqual.text)
+            correctSize = true
+            var matrix_one_row = mat.rowCount(mat1.text)
+            var matrix_one_col = mat.colCount(mat2.text)
+            mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
+        }
+        else
+        {
+            correctSize = false
+            errorMessage = "Uncapatable matricies"
+        }
+    }
+    
+    
     @IBOutlet weak var Done1: UIButton!
 }
