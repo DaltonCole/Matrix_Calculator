@@ -305,7 +305,7 @@ class Matrix
     //Transpose of a matrix
     func TRANSPOSE(matrix_one: [[Float]]) -> [[Float]]
     {
-        var result: [[Float]] = [[Float]]()
+        var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         for var i = 0; i < max_size; i++
         {
             for var j = 0; j < max_size; j++
@@ -318,7 +318,7 @@ class Matrix
     //Multiply two matricies
     func MULTIPLY(matrix_one: [[Float]], matrix_two: [[Float]]) -> [[Float]]
     {
-        var result: [[Float]] = [[Float]]()
+        var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         for var i = 0; i < max_size; i++
         {
             for var j = 0; j < max_size; j++

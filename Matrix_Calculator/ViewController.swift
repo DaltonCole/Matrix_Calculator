@@ -11,12 +11,14 @@ import UIKit
 
 var mat: Matrix = Matrix()
 var matricies = ["A", "B", "C", "D", "E", "F", "G", "H"]
+var max_size: Int = 7
 var pick: String = "A"
 var menu: String = "enter"
 var displayed_matrix: String = "B"
 var pickORfield: Bool = false //false if pick, true if text field
 var correctSize: Bool = false
 var det: Float = 0.0
+var errorMessage: String = ""
 
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate{
@@ -188,68 +190,221 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if(correctSize == true)
         {
             var m: [[Float]]
+            var rowsize: Int
+            var colsize: Int
             if(pickORfield == false)
             {
-                    m = mat.DISPLAY(pick)
+                m = mat.DISPLAY(pick)
+                rowsize = mat.rowCount(pick)
+                colsize = mat.colCount(pick)
             }
             else
             {
                 m = mat.DISPLAY(displayed_matrix)
+                rowsize = mat.rowCount(displayed_matrix)
+                colsize = mat.colCount(displayed_matrix)
             }
-            Display00.text = String(format: "%.2f", m[0][0])
-            Display01.text = String(format: "%.2f", m[0][1])
-            Display02.text = String(format: "%.2f", m[0][2])
-            Display03.text = String(format: "%.2f", m[0][3])
-            Display04.text = String(format: "%.2f", m[0][4])
-            Display05.text = String(format: "%.2f", m[0][5])
-            Display06.text = String(format: "%.2f", m[0][6])
-            Display10.text = String(format: "%.2f", m[1][0])
-            Display11.text = String(format: "%.2f", m[1][1])
-            Display12.text = String(format: "%.2f", m[1][2])
-            Display13.text = String(format: "%.2f", m[1][3])
-            Display14.text = String(format: "%.2f", m[1][4])
-            Display15.text = String(format: "%.2f", m[1][5])
-            Display16.text = String(format: "%.2f", m[1][6])
-            Display20.text = String(format: "%.2f", m[2][0])
-            Display21.text = String(format: "%.2f", m[2][1])
-            Display22.text = String(format: "%.2f", m[2][2])
-            Display23.text = String(format: "%.2f", m[2][3])
-            Display24.text = String(format: "%.2f", m[2][4])
-            Display25.text = String(format: "%.2f", m[2][5])
-            Display26.text = String(format: "%.2f", m[2][6])
-            Display30.text = String(format: "%.2f", m[3][0])
-            Display31.text = String(format: "%.2f", m[3][1])
-            Display32.text = String(format: "%.2f", m[3][2])
-            Display33.text = String(format: "%.2f", m[3][3])
-            Display34.text = String(format: "%.2f", m[3][4])
-            Display35.text = String(format: "%.2f", m[3][5])
-            Display36.text = String(format: "%.2f", m[3][6])
-            Display40.text = String(format: "%.2f", m[4][0])
-            Display41.text = String(format: "%.2f", m[4][1])
-            Display42.text = String(format: "%.2f", m[4][2])
-            Display43.text = String(format: "%.2f", m[4][3])
-            Display44.text = String(format: "%.2f", m[4][4])
-            Display45.text = String(format: "%.2f", m[4][5])
-            Display46.text = String(format: "%.2f", m[4][6])
-            Display50.text = String(format: "%.2f", m[5][0])
-            Display51.text = String(format: "%.2f", m[5][1])
-            Display52.text = String(format: "%.2f", m[5][2])
-            Display53.text = String(format: "%.2f", m[5][3])
-            Display54.text = String(format: "%.2f", m[5][4])
-            Display55.text = String(format: "%.2f", m[5][5])
-            Display56.text = String(format: "%.2f", m[5][6])
-            Display60.text = String(format: "%.2f", m[6][0])
-            Display61.text = String(format: "%.2f", m[6][1])
-            Display62.text = String(format: "%.2f", m[6][2])
-            Display63.text = String(format: "%.2f", m[6][3])
-            Display64.text = String(format: "%.2f", m[6][4])
-            Display65.text = String(format: "%.2f", m[6][5])
-            Display66.text = String(format: "%.2f", m[6][6])
+            if((0 < rowsize) && (0 < colsize))
+            {
+                Display00.text = String(format: "%.2f", m[0][0])
+            }
+            if((0 < rowsize) && (1 < colsize))
+            {
+                Display01.text = String(format: "%.2f", m[0][1])
+            }
+            if((0 < rowsize) && (2 < colsize))
+            {
+                Display02.text = String(format: "%.2f", m[0][2])
+            }
+            if((0 < rowsize) && (3 < colsize))
+            {
+                Display03.text = String(format: "%.2f", m[0][3])
+            }
+            if((0 < rowsize) && (4 < colsize))
+            {
+                Display04.text = String(format: "%.2f", m[0][4])
+            }
+            if((0 < rowsize) && (5 < colsize))
+            {
+                Display05.text = String(format: "%.2f", m[0][5])
+            }
+            if((0 < rowsize) && (6 < colsize))
+            {
+                Display06.text = String(format: "%.2f", m[0][6])
+            }
+            if((1 < rowsize) && (0 < colsize))
+            {
+                Display10.text = String(format: "%.2f", m[1][0])
+            }
+            if((1 < rowsize) && (1 < colsize))
+            {
+                Display11.text = String(format: "%.2f", m[1][1])
+            }
+            if((1 < rowsize) && (2 < colsize))
+            {
+                Display12.text = String(format: "%.2f", m[1][2])
+            }
+            if((1 < rowsize) && (3 < colsize))
+            {
+                Display13.text = String(format: "%.2f", m[1][3])
+            }
+            if((1 < rowsize) && (4 < colsize))
+            {
+                Display14.text = String(format: "%.2f", m[1][4])
+            }
+            if((1 < rowsize) && (5 < colsize))
+            {
+                Display15.text = String(format: "%.2f", m[1][5])
+            }
+            if((1 < rowsize) && (6 < colsize))
+            {
+                Display16.text = String(format: "%.2f", m[1][6])
+            }
+            if((2 < rowsize) && (0 < colsize))
+            {
+                Display20.text = String(format: "%.2f", m[2][0])
+            }
+            if((2 < rowsize) && (1 < colsize))
+            {
+                Display21.text = String(format: "%.2f", m[2][1])
+            }
+            if((2 < rowsize) && (2 < colsize))
+            {
+                Display22.text = String(format: "%.2f", m[2][2])
+            }
+            if((2 < rowsize) && (3 < colsize))
+            {
+                Display23.text = String(format: "%.2f", m[2][3])
+            }
+            if((2 < rowsize) && (4 < colsize))
+            {
+                Display24.text = String(format: "%.2f", m[2][4])
+            }
+            if((2 < rowsize) && (5 < colsize))
+            {
+                Display25.text = String(format: "%.2f", m[2][5])
+            }
+            if((2 < rowsize) && (6 < colsize))
+            {
+                Display26.text = String(format: "%.2f", m[2][6])
+            }
+            if((3 < rowsize) && (0 < colsize))
+            {
+                Display30.text = String(format: "%.2f", m[3][0])
+            }
+            if((3 < rowsize) && (1 < colsize))
+            {
+                Display31.text = String(format: "%.2f", m[3][1])
+            }
+            if((3 < rowsize) && (2 < colsize))
+            {
+                Display32.text = String(format: "%.2f", m[3][2])
+            }
+            if((3 < rowsize) && (3 < colsize))
+            {
+                Display33.text = String(format: "%.2f", m[3][3])
+            }
+            if((3 < rowsize) && (4 < colsize))
+            {
+                Display34.text = String(format: "%.2f", m[3][4])
+            }
+            if((3 < rowsize) && (5 < colsize))
+            {
+                Display35.text = String(format: "%.2f", m[3][5])
+            }
+            if((3 < rowsize) && (6 < colsize))
+            {
+                Display36.text = String(format: "%.2f", m[3][6])
+            }
+            if((4 < rowsize) && (0 < colsize))
+            {
+                Display40.text = String(format: "%.2f", m[4][0])
+            }
+            if((4 < rowsize) && (1 < colsize))
+            {
+                Display41.text = String(format: "%.2f", m[4][1])
+            }
+            if((4 < rowsize) && (2 < colsize))
+            {
+                Display42.text = String(format: "%.2f", m[4][2])
+            }
+            if((4 < rowsize) && (3 < colsize))
+            {
+                Display43.text = String(format: "%.2f", m[4][3])
+            }
+            if((4 < rowsize) && (4 < colsize))
+            {
+                Display44.text = String(format: "%.2f", m[4][4])
+            }
+            if((4 < rowsize) && (5 < colsize))
+            {
+                Display45.text = String(format: "%.2f", m[4][5])
+            }
+            if((4 < rowsize) && (6 < colsize))
+            {
+                Display46.text = String(format: "%.2f", m[4][6])
+            }
+            if((5 < rowsize) && (0 < colsize))
+            {
+                Display50.text = String(format: "%.2f", m[5][0])
+            }
+            if((5 < rowsize) && (1 < colsize))
+            {
+                Display51.text = String(format: "%.2f", m[5][1])
+            }
+            if((5 < rowsize) && (2 < colsize))
+            {
+                Display52.text = String(format: "%.2f", m[5][2])
+            }
+            if((5 < rowsize) && (3 < colsize))
+            {
+                Display53.text = String(format: "%.2f", m[5][3])
+            }
+            if((5 < rowsize) && (4 < colsize))
+            {
+                Display54.text = String(format: "%.2f", m[5][4])
+            }
+            if((5 < rowsize) && (5 < colsize))
+            {
+                Display55.text = String(format: "%.2f", m[5][5])
+            }
+            if((5 < rowsize) && (6 < colsize))
+            {
+                Display56.text = String(format: "%.2f", m[5][6])
+            }
+            if((6 < rowsize) && (0 < colsize))
+            {
+                Display60.text = String(format: "%.2f", m[6][0])
+            }
+            if((6 < rowsize) && (1 < colsize))
+            {
+                Display61.text = String(format: "%.2f", m[6][1])
+            }
+            if((6 < rowsize) && (2 < colsize))
+            {
+                Display62.text = String(format: "%.2f", m[6][2])
+            }
+            if((6 < rowsize) && (3 < colsize))
+            {
+                Display63.text = String(format: "%.2f", m[6][3])
+            }
+            if((6 < rowsize) && (4 < colsize))
+            {
+                Display64.text = String(format: "%.2f", m[6][4])
+            }
+            if((6 < rowsize) && (5 < colsize))
+            {
+                Display65.text = String(format: "%.2f", m[6][5])
+            }
+            if((6 < rowsize) && (6 < colsize))
+            {
+                Display66.text = String(format: "%.2f", m[6][6])
+            }
             uncapatable_matrix.text = "Capatable Matricies"
         }
         else
         {
-            uncapatable_matrix.text = "Uncapatable Matricies"
+            uncapatable_matrix.text = errorMessage
         }
         
     }
@@ -257,10 +412,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //Sets row and column sizes for the selected matrix in enter matrix screen
     @IBAction func SetRowAndCol(sender: AnyObject)
     {
-        var rowS: Int = (rowSize.text).toInt()!
-        var colS: Int = (colSize.text).toInt()!
-        mat.setRowAndColSize(rowS, colSize: colS, matrix_num: pick)
-        correctSize = true
+        if(((rowSize.text).toInt() >= 1) && ((colSize.text).toInt() >= 1) && ((rowSize.text).toInt() <= max_size) && ((colSize.text).toInt() <= max_size))
+        {
+            var rowS: Int = (rowSize.text).toInt()!
+            var colS: Int = (colSize.text).toInt()!
+            mat.setRowAndColSize(rowS, colSize: colS, matrix_num: pick)
+            correctSize = true
+        }
+        else
+        {
+            correctSize = false
+            errorMessage = "Matrix size must be between 1 and 7"
+        }
     }
     
 
@@ -299,8 +462,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             displayed_matrix = "H"
         }
         pickORfield = true
-        println("display: \(display)")
-        println("Displayed_matrix: \(displayed_matrix)")
     }
 
     @IBAction func button_add(sender: AnyObject)
@@ -320,6 +481,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             correctSize = false
+            errorMessage = "Uncapatable Sizes"
         }
     }
     
@@ -340,6 +502,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             correctSize = false
+            errorMessage = "Uncapatable Sizes"
         }
     }
     
@@ -352,14 +515,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         var matrix_one_col = mat.rowCount(mat1.text)
         var matrix_one_row = mat.colCount(mat1.text)
         mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
+        correctSize = true
+        set_display(matEqual.text)
     }
     
     @IBAction func button_det(sender: AnyObject)
     {
-        pickORfield = true
-        var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
-        var rowSize: Int = mat.rowCount(mat1.text)
-        det = mat.DETERMINANT(matrix_one, order: rowSize)
+        if(mat.rowCount(mat1.text) == mat.colCount(mat1.text))
+        {
+            pickORfield = true
+            var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+            var rowSize: Int = mat.rowCount(mat1.text)
+            det = mat.DETERMINANT(matrix_one, order: rowSize)
+            correctSize = true
+        }
+        else
+        {
+            correctSize = false
+            errorMessage = "Matrix must be a square matrix!"
+        }
     }
     
     @IBAction func view_det(sender: AnyObject)
