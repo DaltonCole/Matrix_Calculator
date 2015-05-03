@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import iAd
 
 var mat: Matrix = Matrix()
 var matricies = ["A", "B", "C", "D", "E", "F", "G", "H"]
@@ -21,7 +21,27 @@ var det: Float = 0.0
 var errorMessage: String = ""
 
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate{
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, ADBannerViewDelegate{
+    
+    @IBOutlet weak var adBannerView: ADBannerView!
+    
+    /*
+    var UIiAd: ADBannerView = ADBannerView()
+    
+    func appdelegate() -> AppDelegate
+    {
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        UIiAd.delegate = self
+        UIiAd = self.appdelegate().UIiAd
+        UIiAd.frame = CGRectMake(0,21,0,0)
+    }
+  */
+    
+    
     
     @IBOutlet weak var Display00: UITextField!
     @IBOutlet weak var Display01: UITextField!
@@ -90,6 +110,32 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.canDisplayBannerAds = true
+        self.adBannerView?.delegate = self
+        self.adBannerView?.hidden = true
+    }
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!)
+    {
+        
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!)
+    {
+        self.adBannerView?.hidden = false
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+        return true
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToRecieveAdWithError error: NSError!)
+    {
+        
     }
 
     override func didReceiveMemoryWarning() {
