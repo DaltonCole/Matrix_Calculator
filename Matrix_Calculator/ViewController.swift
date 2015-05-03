@@ -23,26 +23,10 @@ var errorMessage: String = ""
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, ADBannerViewDelegate{
     
+    //For Add Banner
     @IBOutlet weak var adBannerView: ADBannerView!
     
-    /*
-    var UIiAd: ADBannerView = ADBannerView()
-    
-    func appdelegate() -> AppDelegate
-    {
-        return UIApplication.sharedApplication().delegate as AppDelegate
-    }
-    
-    override func viewWillAppear(animated: Bool)
-    {
-        UIiAd.delegate = self
-        UIiAd = self.appdelegate().UIiAd
-        UIiAd.frame = CGRectMake(0,21,0,0)
-    }
-  */
-    
-    
-    
+    //For Display matrix screen
     @IBOutlet weak var Display00: UITextField!
     @IBOutlet weak var Display01: UITextField!
     @IBOutlet weak var Display02: UITextField!
@@ -93,6 +77,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var Display65: UITextField!
     @IBOutlet weak var Display66: UITextField!
     
+    //For matrix operations
     @IBOutlet weak var mat1: UITextField!
     @IBOutlet weak var mat2: UITextField!
     @IBOutlet weak var matEqual: UITextField!
@@ -106,15 +91,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //label to tell user that the matricies are uncapatable
     @IBOutlet weak var uncapatable_matrix: UILabel!
+    @IBOutlet weak var bad_Det: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        //These are for the Ad banner
         self.canDisplayBannerAds = true
         self.adBannerView?.delegate = self
         self.adBannerView?.hidden = true
     }
     
+    //The following five functions are for the Ad banners
     func bannerViewWillLoadAd(banner: ADBannerView!)
     {
         
@@ -585,35 +573,35 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     func set_display(display:String)
     {
-        if(display == "A")
+        if(display == "A" || display == "a")
         {
             displayed_matrix = "A"
         }
-        else if(display == "B")
+        else if(display == "B" || display == "b")
         {
             displayed_matrix = "B"
         }
-        else if(display == "C")
+        else if(display == "C" || display == "c")
         {
             displayed_matrix = "C"
         }
-        else if(display == "D")
+        else if(display == "D" || display == "d")
         {
             displayed_matrix = "D"
         }
-        else if(display == "E")
+        else if(display == "E" || display == "e")
         {
             displayed_matrix = "E"
         }
-        else if(display == "F")
+        else if(display == "F" || display == "f")
         {
             displayed_matrix = "F"
         }
-        else if(display == "G")
+        else if(display == "G" || display == "g")
         {
             displayed_matrix = "G"
         }
-        else if(display == "H")
+        else if(display == "H" || display == "h")
         {
             displayed_matrix = "H"
         }
@@ -622,7 +610,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     @IBAction func button_add(sender: AnyObject)
     {
-        if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
+        if(check_letter_input(mat1.text) || check_letter_input(mat2.text) || check_letter_input(matEqual.text))
+        {
+            
+        }
+        else if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
         {
             var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
             var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
@@ -643,7 +635,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func button_sub(sender: AnyObject)
     {
-        if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
+        if(check_letter_input(mat1.text) || check_letter_input(mat2.text) || check_letter_input(matEqual.text))
+        {
+            
+        }
+        else if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
         {
             var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
             var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
@@ -664,20 +660,31 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func button_tran(sender: AnyObject)
     {
-        pickORfield = true
-        var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
-        var matrix_equal: [[Float]] = mat.TRANSPOSE(matrix_one)
-        mat.SAVE(matEqual.text, matrix_one : matrix_equal)
-        var matrix_one_col = mat.rowCount(mat1.text)
-        var matrix_one_row = mat.colCount(mat1.text)
-        mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
-        correctSize = true
-        set_display(matEqual.text)
+        if(check_letter_input(mat1.text) || check_letter_input(matEqual.text))
+        {
+            
+        }
+        else
+        {
+            pickORfield = true
+            var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
+            var matrix_equal: [[Float]] = mat.TRANSPOSE(matrix_one)
+            mat.SAVE(matEqual.text, matrix_one : matrix_equal)
+            var matrix_one_col = mat.rowCount(mat1.text)
+            var matrix_one_row = mat.colCount(mat1.text)
+            mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
+            correctSize = true
+            set_display(matEqual.text)
+        }
     }
     
     @IBAction func button_det(sender: AnyObject)
     {
-        if(mat.rowCount(mat1.text) == mat.colCount(mat1.text))
+        if(check_letter_input(mat1.text))
+        {
+            
+        }
+        else if(mat.rowCount(mat1.text) == mat.colCount(mat1.text))
         {
             pickORfield = true
             var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
@@ -694,15 +701,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func view_det(sender: AnyObject)
     {
-        detEqual.text = String(format: "%.2f", det)
+        if(correctSize)
+        {
+            detEqual.text = String(format: "%.2f", det)
+        }
+        else
+        {
+            bad_Det.text = "Must select between A through H for matricies"
+        }
     }
-    
     
     @IBAction func button_inverse(sender: AnyObject)
     {
         var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
         
-        if((mat.rowCount(mat1.text) == mat.colCount(mat1.text)) && (mat.DETERMINANT(matrix_one, order: mat.rowCount(mat1.text)) != 0))
+        if(check_letter_input(mat1.text) || check_letter_input(matEqual.text))
+        {
+            
+        }
+        else if((mat.rowCount(mat1.text) == mat.colCount(mat1.text)) && (mat.DETERMINANT(matrix_one, order: mat.rowCount(mat1.text)) != 0))
         {
             pickORfield = true
             var matrix_equal: [[Float]] = mat.INVERSE(matrix_one, order: mat.rowCount(mat1.text))
@@ -722,7 +739,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func button_multi(sender: AnyObject)
     {
-        if((mat.rowCount(mat1.text) == mat.colCount(mat2.text)) && (mat.rowCount(mat1.text) == mat.colCount(mat2.text)))
+        if(check_letter_input(mat1.text) || check_letter_input(mat2.text) || check_letter_input(matEqual.text))
+        {
+        
+        }
+        else if((mat.rowCount(mat1.text) == mat.colCount(mat2.text)) && (mat.rowCount(mat1.text) == mat.colCount(mat2.text)))
         {
             var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
             var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
@@ -739,6 +760,46 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             correctSize = false
             errorMessage = "Uncapatable matricies"
         }
+    }
+    
+    //returns false if matrix input is correct letter, true if it is not
+    func check_letter_input(display: String) -> Bool
+    {
+        if(display == "A" || display == "a")
+        {
+            return false
+        }
+        else if(display == "B" || display == "b")
+        {
+            return false
+        }
+        else if(display == "C" || display == "c")
+        {
+            return false
+        }
+        else if(display == "D" || display == "d")
+        {
+            return false
+        }
+        else if(display == "E" || display == "e")
+        {
+            return false
+        }
+        else if(display == "F" || display == "f")
+        {
+            return false
+        }
+        else if(display == "G" || display == "g")
+        {
+            return false
+        }
+        else if(display == "H" || display == "h")
+        {
+            return false
+        }
+        correctSize = false
+        errorMessage = "Must select between A through H for matricies"
+        return true
     }
     
     
