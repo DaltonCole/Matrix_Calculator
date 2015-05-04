@@ -13,10 +13,6 @@
 		291537361AD8699C00FACAAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 291537351AD8699C00FACAAA /* Images.xcassets */; };
 		291537391AD8699C00FACAAA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 291537371AD8699C00FACAAA /* LaunchScreen.xib */; };
 		291537451AD8699C00FACAAA /* Matrix_CalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291537441AD8699C00FACAAA /* Matrix_CalculatorTests.swift */; };
-		298910A51AF6A2B100A034FB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298910A41AF6A2B100A034FB /* iAd.framework */; };
-		298910A71AF6A2C200A034FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298910A61AF6A2C200A034FB /* CoreGraphics.framework */; };
-		298910A91AF6A2CE00A034FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298910A81AF6A2CE00A034FB /* UIKit.framework */; };
-		298910AB1AF6A2DD00A034FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298910AA1AF6A2DD00A034FB /* Foundation.framework */; };
 		29ADC98D1AEED3C800508FE9 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ADC98C1AEED3C800508FE9 /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,10 +37,6 @@
 		2915373E1AD8699C00FACAAA /* Matrix_CalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Matrix_CalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		291537431AD8699C00FACAAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		291537441AD8699C00FACAAA /* Matrix_CalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix_CalculatorTests.swift; sourceTree = "<group>"; };
-		298910A41AF6A2B100A034FB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
-		298910A61AF6A2C200A034FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		298910A81AF6A2CE00A034FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		298910AA1AF6A2DD00A034FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		29ADC98C1AEED3C800508FE9 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,10 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				298910AB1AF6A2DD00A034FB /* Foundation.framework in Frameworks */,
-				298910A91AF6A2CE00A034FB /* UIKit.framework in Frameworks */,
-				298910A71AF6A2C200A034FB /* CoreGraphics.framework in Frameworks */,
-				298910A51AF6A2B100A034FB /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,10 +61,6 @@
 		291537201AD8699C00FACAAA = {
 			isa = PBXGroup;
 			children = (
-				298910AA1AF6A2DD00A034FB /* Foundation.framework */,
-				298910A81AF6A2CE00A034FB /* UIKit.framework */,
-				298910A61AF6A2C200A034FB /* CoreGraphics.framework */,
-				298910A41AF6A2B100A034FB /* iAd.framework */,
 				2915372B1AD8699C00FACAAA /* Matrix_Calculator */,
 				291537411AD8699C00FACAAA /* Matrix_CalculatorTests */,
 				2915372A1AD8699C00FACAAA /* Products */,

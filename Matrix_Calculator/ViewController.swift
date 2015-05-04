@@ -10,7 +10,7 @@ import UIKit
 import iAd
 
 var mat: Matrix = Matrix()
-var matricies = ["A", "B", "C", "D", "E", "F", "G", "H"]
+var matricies = ["", "B", "C", "D", "E", "F", "G", "H"]
 var max_size: Int = 7
 var pick: String = "A"
 var menu: String = "enter"
@@ -21,10 +21,7 @@ var det: Float = 0.0
 var errorMessage: String = ""
 
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, ADBannerViewDelegate{
-    
-    //For Add Banner
-    @IBOutlet weak var adBannerView: ADBannerView!
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UITextFieldDelegate{
     
     //For Display matrix screen
     @IBOutlet weak var Display00: UITextField!
@@ -97,34 +94,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //These are for the Ad banner
-        self.canDisplayBannerAds = true
-        self.adBannerView?.delegate = self
-        self.adBannerView?.hidden = true
     }
     
-    //The following five functions are for the Ad banners
-    func bannerViewWillLoadAd(banner: ADBannerView!)
-    {
-        
-    }
-    
-    func bannerViewDidLoadAd(banner: ADBannerView!)
-    {
-        self.adBannerView?.hidden = false
-    }
-    
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        
-    }
-    
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
-        return true
-    }
-    
-    func bannerView(banner: ADBannerView!, didFailToRecieveAdWithError error: NSError!)
-    {
-        
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
