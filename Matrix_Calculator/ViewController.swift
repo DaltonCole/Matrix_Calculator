@@ -298,6 +298,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             Display65.hidden = true
             Display66.hidden = true
             
+            //Make number pads for all text fields
+            //Display00.keyboardType = UIKeyboardType.NumberPad
+            
             
             if((0 < rowsize) && (0 < colsize))
             {
@@ -544,7 +547,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 Display66.hidden = false
                 Display66.text = String(format: "%.2f", m[6][6])
             }
-            uncapatable_matrix.text = "Capatable Matricies"
+            uncapatable_matrix.text = "Compatible Matricies"
         }
         else
         {
@@ -629,7 +632,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             correctSize = false
-            errorMessage = "Uncapatable Sizes"
+            errorMessage = "Incompatible Sizes"
         }
     }
     
@@ -654,7 +657,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             correctSize = false
-            errorMessage = "Uncapatable Sizes"
+            errorMessage = "Incompatible Sizes"
         }
     }
     
@@ -758,7 +761,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             correctSize = false
-            errorMessage = "Uncapatable matricies"
+            errorMessage = "Incompatible matricies"
         }
     }
     
