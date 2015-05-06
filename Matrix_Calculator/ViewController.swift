@@ -763,7 +763,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         else
         {
-            bad_Det.text = "Must select between A through H for matricies"
+            bad_Det.text = "Select between A through H for matricies"
         }
     }
     
@@ -792,7 +792,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             correctSize = false
-            errorMessage = "Matrix must be a square matrix and determinant cannot equal 0"
+            errorMessage = "Matrix Does NOT have an Inverse"
         }
     }
     
@@ -863,7 +863,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             return false
         }
         correctSize = false
-        errorMessage = "Must select between A through H for matricies"
+        errorMessage = "Select between A through H for matricies"
         return true
     }
     
