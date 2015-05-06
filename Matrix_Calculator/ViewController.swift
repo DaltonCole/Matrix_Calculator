@@ -9,15 +9,23 @@
 import UIKit
 import iAd
 
+//Creates eight two dementional arrays and keeps track of row and column size (starting at 1)
 var mat: Matrix = Matrix()
+//Names for each 2-D array in matrix class
 var matricies = ["A", "B", "C", "D", "E", "F", "G", "H"]
+//Max 2-D array size in matrix class
 var max_size: Int = 7
+//Represents which matrix the picker choose
 var pick: String = "A"
-var menu: String = "enter"
+//Represents which matrix to be displayed, choosen from text boxes
 var displayed_matrix: String = "B"
+//Tells weather to use pick or displayed_matrix variable to display matrix
 var pickORfield: Bool = false //false if pick, true if text field
+//Tells weather or not matricies are capatable in their operations
 var correctSize: Bool = false
+//Represents determinate value to be displayed
 var det: Float = 0.0
+//If values are out of range of acceptable values or matricies are not capatable with operations, display error message as a Label
 var errorMessage: String = ""
 
 
@@ -26,7 +34,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //For Add Banner
     @IBOutlet weak var adBannerView: ADBannerView!
     
-    //For Display matrix screen
+    //For Display matrix screen. Display a possible 49 text boxes to enter matrix
     @IBOutlet weak var Display00: UITextField!
     @IBOutlet weak var Display01: UITextField!
     @IBOutlet weak var Display02: UITextField!
@@ -89,14 +97,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     
-    //label to tell user that the matricies are uncapatable
+    //Label to tell user that the matricies are uncapatable
     @IBOutlet weak var uncapatable_matrix: UILabel!
     @IBOutlet weak var bad_Det: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //These are for the Ad banner
+        
+        //For Ad banner
         self.canDisplayBannerAds = true
         self.adBannerView?.delegate = self
         self.adBannerView?.hidden = true
@@ -125,29 +134,36 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         
     }
-
+    //end of Ad Banner functions
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    // returns the number of 'columns' to display.
+    //Part of: Picker View
+    //Purpose: Returns the number of 'columns' to display in picker.
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
     {
         return 1
     }
     
-    // returns the # of rows in each component..
+    //Part of: Picker View
+    //Purpose: Returns the number of rows in each component (ie number of elements in matricies array)
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         return matricies.count
     }
     
+    //Part of: Picker View
+    //Purpose: Populates picker view with strings from matricies array (B-H)
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
     {
         return matricies[row]
     }
     
+    //Part of: Picker View
+    //Purpose: Returns the matrix string picked by user in picker view
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         var matrix_selected = matricies[row]
@@ -155,10 +171,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         pickORfield = false
     }
     
-    //Done button on Enter Matrix Pressed
+    //Pre: Done Button is pressed (on view matrix screen)
+    //Post: The corresponding matrix, called displayed_matrix or pick, is saved to the matrix class
     @IBAction func DoneButtonPressed(sender: AnyObject)
     {
         var m: [[Float]]
+        
+        //Is matrix to be saved from picker or from text field?
         if(pickORfield == false)
         {
             m = mat.DISPLAY(pick)
@@ -168,6 +187,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             println("\(displayed_matrix)")
             m = mat.DISPLAY(displayed_matrix)
         }
+        //Populate 2-D array with elements from corresponding matrix text fields
         m[0][0] = (Display00.text as NSString).floatValue
         m[0][1] = (Display01.text as NSString).floatValue
         m[0][2] = (Display02.text as NSString).floatValue
@@ -217,6 +237,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         m[6][4] = (Display64.text as NSString).floatValue
         m[6][5] = (Display65.text as NSString).floatValue
         m[6][6] = (Display66.text as NSString).floatValue
+        
+        //Save matrix m using either pick or displayed_matrix variables as corresponding matrix
         if(pickORfield == false)
         {
             mat.SAVE(pick, matrix_one: m)
@@ -227,13 +249,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    //Pre: Display button is pressed
+    //Post: Populates text boxes to corresponding matrix and hiddes the other text boxes. If incapatable matrix, then a warning is shown
     @IBAction func NextButtonPressed(sender: AnyObject)
     {
+        //If capatable matricies were entered, display matrix, if not, give warning
         if(correctSize == true)
         {
             var m: [[Float]]
             var rowsize: Int
             var colsize: Int
+            
+            //Is the matrix to be populated using picker or text field value?
             if(pickORfield == false)
             {
                 m = mat.DISPLAY(pick)
@@ -247,7 +274,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 colsize = mat.colCount(displayed_matrix)
             }
             
-            //Make text fields invisible to start with
+            //Make text fields invisible
             Display00.hidden = true
             Display01.hidden = true
             Display02.hidden = true
@@ -298,7 +325,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             Display65.hidden = true
             Display66.hidden = true
             
-            
+            //Populates each text field corresponding to their 2-D array value and makes visible if populated
             if((0 < rowsize) && (0 < colsize))
             {
                 Display00.hidden = false
@@ -553,7 +580,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
     
-    //Sets row and column sizes for the selected matrix in enter matrix screen
+    
+    //Purpose: Sets row and column sizes for the selected matrix in enter matrix screen
     @IBAction func SetRowAndCol(sender: AnyObject)
     {
         if(((rowSize.text).toInt() >= 1) && ((colSize.text).toInt() >= 1) && ((rowSize.text).toInt() <= max_size) && ((colSize.text).toInt() <= max_size))
@@ -570,7 +598,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-
+    //Purpose: Sets global variable displayed_matrix to corresponding matrix, sets pickORfield to true to because only a text field operation should call this function
     func set_display(display:String)
     {
         if(display == "A" || display == "a")
@@ -608,20 +636,29 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         pickORfield = true
     }
 
+    //Pre: Next button is pressed on addition page
+    //Post: Adds two matricies. If capatable matricies, new matrix (matEqual) is saved to corresponding matrix in mat. If uncapatable, warning will update
     @IBAction func button_add(sender: AnyObject)
     {
+        //1. Checks to see if all three letter inputs are between A-H
+        //2. Check to see if both matricies are of the same size
+        //3. If not, mark correct size as false to indicate incapatable matricies and update error message
         if(check_letter_input(mat1.text) || check_letter_input(mat2.text) || check_letter_input(matEqual.text))
         {
             
         }
         else if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
         {
+            //Set 2D array varables to the corresponding ones in matrix class and Add
             var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
             var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
             var matrix_equal: [[Float]] = mat.ADD(matrix_one, matrix_two: matrix_two)
+            //Save to the corresponding matrix in matrix class
             mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+            //Update display for next screen
             set_display(matEqual.text)
             correctSize = true
+            //Update row and column size of updated matrix
             var matrix_one_row = mat.rowCount(mat1.text)
             var matrix_one_col = mat.colCount(mat1.text)
             mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
@@ -633,20 +670,29 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    //Pre: Next button is pressed on Subtraction page
+    //Post: Subtracts two matricies. If capatable matricies, new matrix (matEqual) is saved to corresponding matrix in mat. If uncapatable, warning will update
     @IBAction func button_sub(sender: AnyObject)
     {
+        //1. Checks to see if all three letter inputs are between A-H
+        //2. Check to see if both matricies are of the same size
+        //3. If not, mark correct size as false to indicate incapatable matricies and update error message
         if(check_letter_input(mat1.text) || check_letter_input(mat2.text) || check_letter_input(matEqual.text))
         {
             
         }
         else if((mat.rowCount(mat1.text) == mat.rowCount(mat2.text)) && (mat.colCount(mat1.text) == mat.colCount(mat2.text)))
         {
+            //Set 2D array varables to the corresponding ones in matrix class and Subtract
             var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
             var matrix_two: [[Float]] = mat.DISPLAY(mat2.text)
             var matrix_equal: [[Float]] = mat.SUB(matrix_one, matrix_two: matrix_two)
+            //Save to the corresponding matrix in matrix class
             mat.SAVE(matEqual.text, matrix_one: matrix_equal)
+            //Update display for next screen
             set_display(matEqual.text)
             correctSize = true
+            //Update row and column size of updated matrix
             var matrix_one_row = mat.rowCount(mat1.text)
             var matrix_one_col = mat.colCount(mat1.text)
             mat.setRowAndColSize(matrix_one_row, colSize: matrix_one_col, matrix_num: matEqual.text)
@@ -658,8 +704,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    //Pre: Next button is pressed on transpose page
+    //Post: Takes the transpose of a matrix and saves it to the corresponding matEqual value
     @IBAction func button_tran(sender: AnyObject)
     {
+        //1. Checks to see if both letter inputs are between A-H
+        //2. If they are, take transpose
         if(check_letter_input(mat1.text) || check_letter_input(matEqual.text))
         {
             
@@ -678,8 +728,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    //Pre: Next button is pressed on determinate page
+    //Post: Takes the determinate if capatable matrix is given
     @IBAction func button_det(sender: AnyObject)
     {
+        //1. Checks to see if the inputs are between A-H
+        //2. Checks to see if the inputed matrix is square
+        //3. If not square, make correctSize as false and update error message
         if(check_letter_input(mat1.text))
         {
             
@@ -699,6 +754,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    //Display Determinate when display button is pressed. Shows warning if correctSize is false
     @IBAction func view_det(sender: AnyObject)
     {
         if(correctSize)
@@ -711,6 +767,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    
+    //Pre: Next button is pressed on inverse page
+    //Post: Takes the invers of a matrix if capatable, gives warning if not capatable
     @IBAction func button_inverse(sender: AnyObject)
     {
         var matrix_one: [[Float]] = mat.DISPLAY(mat1.text)
@@ -737,8 +796,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    
+    //Pre: Next button is pressed on Multiplication page
+    //Post: Multiplies two matricies. If capatable matricies, new matrix (matEqual) is saved to corresponding matrix in mat. If uncapatable, warning will update
     @IBAction func button_multi(sender: AnyObject)
     {
+        //1. Checks to see if all three letter inputs are between A-H
+        //2. Check to see if both matricies are of matrix multiplication capatable size
+        //3. If not, mark correct size as false to indicate incapatable matricies and update error message
         if(check_letter_input(mat1.text) || check_letter_input(mat2.text) || check_letter_input(matEqual.text))
         {
         
@@ -762,7 +827,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    //returns false if matrix input is correct letter, true if it is not
+    //Purpose: Returns false if matrix input is correct letter, true if it is not
     func check_letter_input(display: String) -> Bool
     {
         if(display == "A" || display == "a")

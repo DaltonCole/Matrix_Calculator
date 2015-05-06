@@ -10,6 +10,7 @@ import Foundation
 
 class Matrix
 {
+    //8 two-D arrays to store each matrix
     var A: [[Float]] = [[Float]]()
     var B: [[Float]] = [[Float]]()
     var C: [[Float]] = [[Float]]()
@@ -19,6 +20,7 @@ class Matrix
     var G: [[Float]] = [[Float]]()
     var H: [[Float]] = [[Float]]()
     
+    //Row and column count (starting at 1) for each matrix
     var rowA: Int
     var colA: Int
     var rowB: Int
@@ -36,7 +38,7 @@ class Matrix
     var rowH: Int
     var colH: Int
     
-    //for Determinate
+    //For Determinate, not unique for each matrix
     var d: Float
     
     
@@ -44,6 +46,7 @@ class Matrix
     
     init()
     {
+        //Set each matrix to be a 7x7 matrix of all 0s
         self.A = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         self.B = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         self.C = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
@@ -53,6 +56,7 @@ class Matrix
         self.G = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         self.H = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         
+        //each matrix starts out with having 0 rows and 0 columns for computations
         self.rowA = 0
         self.colA = 0
         self.rowB = 0
@@ -70,14 +74,17 @@ class Matrix
         self.rowH = 0
         self.colH = 0
         
+        //Determinate is set to 0, to be calculated later. This is not unique for each matrix
         self.d = 0
     }
-    //Returns the matrix to be displayed
+    
+    //Pre: Passes in the matrix the user wants as a string
+    //Post: Returns the matrix to be displayed as a two-D float
     func DISPLAY(matrix_number: String) -> [[Float]]
     {
         if(matrix_number == "A")
         {
-            println("Return A")
+            println("Return A") //Print line is for debuging, will need to be deleted in final product
             return A
         }
         else if(matrix_number == "B")
@@ -113,13 +120,15 @@ class Matrix
             return H
         }
     }
-    //Save Matrix
+    
+    //Pre: A string and matrix previously calculated is passed
+    //Post: Returns void. This functions alters a user specified 2-D array in the matrix class to corelate to the calculated array.
     func SAVE(pick: String, matrix_one: [[Float]])
     {
         if(pick == "A")
         {
             A = matrix_one
-            println("Save A")
+            println("Save A") //For Debuging
 
         }
         else if(pick == "B")
@@ -156,6 +165,8 @@ class Matrix
         }
     }
     
+    //Pre: Two Ints, representing the row and column size of a matrix that is known by passing a string is passed with the string
+    //Post: Sets row size and column size for the specified 2-D array according to matrix_num
     func setRowAndColSize(rowSize: Int, colSize: Int, matrix_num: String)
     {
         if(matrix_num == "A")
@@ -200,7 +211,8 @@ class Matrix
         }
     }
     
-    //Returns number of rows in a matrix
+    //Pre: A string that represents a specific 2-D array is passed
+    //Post: The row count for the specified 2-D array is returned
     func rowCount(matrix_num: String) -> Int
     {
         if(matrix_num == "A")
@@ -238,7 +250,8 @@ class Matrix
  
     }
     
-    //Returns number of Columns in a matrix
+    //Pre: A string that represents a specific 2-D array is passed
+    //Post: The column count for the specified 2-D array is returned
     func colCount(matrix_num: String) -> Int
     {
         if(matrix_num == "A")
@@ -275,7 +288,9 @@ class Matrix
         }
         
     }
-    //Adds two matricies together
+    
+    //Pre: Two 2-D arrays representing two matricies are passed
+    //Post: A third 2-D array is returned that is the sum of the first two matricies
     func ADD(matrix_one: [[Float]], matrix_two: [[Float]]) -> [[Float]]
     {
         var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
@@ -288,7 +303,9 @@ class Matrix
         }
         return result
     }
-    //Subtracts two matricies
+    
+    //Pre: Two 2-D arrays representing two matricies are passed
+    //Post: A third 2-D array is retured that is the difference of the first two matricies
     func SUB(matrix_one: [[Float]], matrix_two: [[Float]]) -> [[Float]]
     {
         var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
@@ -302,7 +319,9 @@ class Matrix
         }
         return result
     }
-    //Transpose of a matrix
+    
+    //Pre: A 2-D array is passed
+    //Post: A 2-D array is returned that represents the transpose of the original matrix. The row and column of the new matrix is not updated in this function, but should be else where
     func TRANSPOSE(matrix_one: [[Float]]) -> [[Float]]
     {
         var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
@@ -315,7 +334,9 @@ class Matrix
         }
         return result
     }
-    //Multiply two matricies
+    
+    //Pre: Two 2-D arrays are passed
+    //Post: A third 2-D array is returned that represents the matrix multiple of the others
     func MULTIPLY(matrix_one: [[Float]], matrix_two: [[Float]]) -> [[Float]]
     {
         var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
@@ -332,261 +353,101 @@ class Matrix
         }
         return result
     }
-    //Take the inverse of a matrix
+    
+    
+    
+    //Pre: A 2-D array is passed along with its row (or column because it is a square matrix) size
+    //Post: A 2-D array which is the inverse of the original matrix is returned. It should be checked else where (using the determinate) if the inverse exists
     func INVERSE(matrix_one: [[Float]], order: Int) -> [[Float]]
     {
-        var result: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
         
-        var invert: [[Float]] = [[Float]](count:8, repeatedValue:[Float](count:16, repeatedValue:0))
+        var i: Int
+        var j: Int
+        var k: Int
+        var n: Int = order
         
-        var invertable: Float = DETERMINANT(matrix_one, order: order)
+        var a: [[Float]] = [[Float]](count: 20, repeatedValue: [Float](count:20, repeatedValue:0))
+        var invert: [[Float]] = [[Float]](count: 7, repeatedValue: [Float](count: 7, repeatedValue:0))
+        var d: Float
         
-        var coefficient: Float = 1
-        
-        if( invertable != 0)
+        for i = 1; i <= n; i++
         {
-            var i: Int
-            var j: Int
-            var k: Int
-            var l: Int
-            var n = order
-            var f: Float
-            var ratio: Float
-            var multi: Float
-            var a: Float
-            var divider: Float
-            
-            for i = 0; i < n; i++
+            for j = 1; j <= n; j++
             {
-                for j = 0; j < n; j++
+                a[i][j] = matrix_one[i-1][j-1]
+            }
+        }
+        
+        for i = 1; i <= n ; i++
+        {
+            for j = 1; j <= 2*n; j++
+            {
+                if (j == (i+n))
                 {
-                    invert[i][j] = matrix_one[i][j]
+                    a[i][j] = 1
                 }
             }
-            
-            for i = 0; i < n; i++
-            {
-                for j = n; j < 2*n; j++
-                {
-                    if(i == (j-n))
-                    {
-                        invert[i][j] = 1
-                    }
-                    else
-                    {
-                        invert[i][j] = 0
-                    }
-                }
-            }
-            
-            //get the first half of matrix 0 except for diagonal
-            //Forward loop
-
-            
-            //Get diagonal to be all 1s (WORKS)
-            for i = 0; i < n; i++
-            {
-                for j = 0; j < 2*n; j++
-                {
-                    if(i == j)
-                    {
-                        if(invert[i][j] != 1)
-                        {
-                            ratio = invert[i][j]
-                            for var t = i; t < n; t++
-                            {
-                                for var v = 0; v < 2*n; v++
-                                {
-                                    invert[t][v] = invert[t][v] / ratio
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            //The above code makes the diagonal all 1s, use this to forward eliminate, then backwards subsitute 
-            
-            /*
-            for i = 0; i < n; i++
-            {
-                for j = 0; j < 2*n; j++
-                {
-                    println("\(invert[i][j])")
-                }
-            }
-            println("-----------------")
-            for i = 0; i < n; i++
-            {
-                for j = 0; j < n; j++
-                {
-                    if(i != j)
-                    {
-                        ratio = invert[j][i] / invert[i][j]
-                        for k = 0; k < 2*n; k++
-                        {
-                            invert[j][k] -= ratio * invert[i][k]
-                        }
-                    }
-                }
-            }
-            for i = 0; i < n; i++
-            {
-                a = invert[i][i]
-                for j = 0; j < 2*n; j++
-                {
-                    invert[i][j] /= a
-                }
-            }
-            for i = 0; i < n; i++
-            {
-                for j = 0; j < 2*n; j++
-                {
-                    println("\(invert[i][j])")
-                }
-            } */
-            /*
-            //make an augmented matrix with the left hand side being the Identity matrix and right being the original matrix
-            for i = 1; i <= n; i++
+        }
+        
+        for i = n; i > 1; i--
+        {
+            if( a[i-1][1] < a[i][1])
             {
                 for j = 1; j <= n*2; j++
                 {
-                    if( j == (i + n)) //might be n-1
-                    {
-                        invert[i][j] = 1
-                    }
+                    d = a[i][j]
+                    a[i][j] = a[i-1][j]
+                    a[i-1][j] = d
                 }
             }
-            for i = n; i > 1; i--
-            {
-                if(invert[i][1] < invert[i][1])
-                {
-                    for j = 1; j <= n*2; j++
-                    {
-                        //println("\(invert[i][j])")
-                        f = invert[i][j]
-                        invert[i][j] = invert[i-1][j]
-                        invert[i-1][j] = f
-                        //println("\(invert[i][j])")
-                    }
-                }
-            }
-            
-            //Get identity onto the right hand side
-            for i = 1; i <= n; i++
-            {
-                for j = 1; j <= n*2; j++
-                {
-                    if(j != i)
-                    {
-                        f = invert[j][i] / invert[i][j]
-                        for k = 1; k <= n*2; k++
-                        {
-                            invert[j][k] = invert[j][k] - (invert[i][k] * f)
-                        }
-                    }
-                    println("\(invert[i][j])")
-                }
-            }
-            for i = 1; i <= n; i++
-            {
-                f = invert[i][i]
-                for j = 0; j <= n*2; j++
-                {
-                    invert[i][j] = invert[i][j] / f
-                    //println("\(invert[i][j])")
-                }
-            }
-            
-            for i = 0; i < n; i++
-            {
-                for j = 0; j < n; j++
-                {
-                    invert[i][j] = invert[i+1][j+1]
-                }
-            }
-            //Set the first half of inverse equal to result matrix
-            for i = 0; i < n; i++
-            {
-                for j = 0; j < n; j++
-                {
-                    result[i][j] = invert[i+1][(j)+n]
-                }
-            }*/
-            /*
-            for var i = 0; i < max_size; i++
-            {
-                for var j = 0; j < max_size*2; j++
-                {
-                    if(i <= j)
-                    {
-                        invert[i][j] = matrix_one[i][j]
-                    }
-                    else
-                    {
-                        if(i == (j-max_size))
-                        {
-                            invert[i][j] = 1
-                        }
-                        else
-                        {
-                            invert[i][j] = 0
-                        }
-                    }
-                }
-            }
-            for var i = 0; i < max_size; i++
-            {
-                for var j = 0; j < max_size*2; j++
-                {
-                    if(i == j && invert[i][j] == 0)
-                    {
-                        for var k = i; k < max_size-1; k++
-                        {
-                            for var l = 0; l < max_size*2; l++
-                            {
-                                var switch_rows = invert[k][l]
-                                invert[k][l] = invert[k+1][l+1]
-                                invert[k+1][l+1] = switch_rows
-                            }
-                        }
-                        j = -1
-                    }
-                    else
-                    {
-                        if(i == j)
-                        {
-                            if(invert[i][j] != 1)
-                            {
-                                coefficient = invert[i][j]
-                            }
-                        }
-                        if(invert[i][i] != 1)
-                        {
-                            invert[i][j] = invert[i][j] / coefficient
-                        }
-                        //FINISH__-----------------------------------------------
-                    }
-                }
-            }*/
         }
-        else
+        
+        for i = 1; i <= n; i++
         {
-            //error
+            for j = 1; j <= n*2; j++
+            {
+                if(j != i)
+                {
+                    d = a[j][i] / a[i][i]
+                    for k = 1; k <= n*2; k++
+                    {
+                        a[j][k] = a[j][k] - (a[i][k] * d)
+                    }
+                }
+            }
         }
+        for i = 1; i <= n; i++
+        {
+            d = a[i][i]
+            for j = 1; j <= n*2; j++
+            {
+                a[i][j] = a[i][j] / d
+            }
+        }
+        for i = 1; i <= n; i++
+        {
+            for j = n+1; j <= n*2; j++
+            {
+                invert[i-1][(j-1)-n] = a[i][j]
+                println("\(a[i][j])")
+            }
+        }
+        
         return invert
-        //return result
-        //var test: [[Float]] = [[Float]](count:7, repeatedValue:[Float](count:7, repeatedValue:0))
-        //return test
+        
     }
-    
-    //Takes the determinite of a matrix
+
+        
+    //Pre: A 2-D array is passed with the row (or column) size
+    //Post: A Float is returned which represents the determinate
     func DETERMINANT(matrix_one: [[Float]], order: Int) -> Float
     {
         self.d = 0
         var determinant: Float = DET(order, matrix_one: matrix_one)
         return determinant
     }
+    
+    //Purpose: The work horse of the DETERMINANT function
     func DET(order: Int, matrix_one: [[Float]]) -> Float
     {
         var c: Int
@@ -625,6 +486,8 @@ class Matrix
         }
         return d
     }
+    
+    /*
     //Returns the LU Factorization of a matrix
     func LU(matrix_one: [[Float]]) -> (L_matrix: [[Float]], U_matrix: [[Float]])
     {
@@ -673,5 +536,5 @@ class Matrix
         }
         return (L_matrix, U_matrix)
     }
-    
+    */
 }
